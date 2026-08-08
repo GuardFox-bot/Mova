@@ -1,1 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOVA</title>
 
+    <link rel="stylesheet"
+          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="topbar">
+        <div>
+            <div class="logo">MOVA</div>
+            <div class="subtitle">Explore. Collect. Move.</div>
+        </div>
+
+        <div class="stats">
+            <div>⭐ <span id="points">0</span></div>
+            <div>🪙 <span id="coins">0</span></div>
+        </div>
+    </header>
+
+    <main>
+        <section class="welcome">
+            <h1>Prêt à explorer ?</h1>
+            <p>Déplace-toi dans le monde réel et découvre ce qui t'attend.</p>
+        </section>
+
+        <section class="map-container">
+            <div id="map"></div>
+
+            <div class="location-message" id="locationMessage">
+                📍 Recherche de ta position...
+            </div>
+        </section>
+
+        <section class="bottom-panel">
+
+            <div class="card">
+                <span class="card-icon">👟</span>
+                <div>
+                    <strong id="steps">0</strong>
+                    <small>pas</small>
+                </div>
+            </div>
+
+            <div class="card">
+                <span class="card-icon">🗺️</span>
+                <div>
+                    <strong id="distance">0.0</strong>
+                    <small>km</small>
+                </div>
+            </div>
+
+            <div class="card">
+                <span class="card-icon">🎯</span>
+                <div>
+                    <strong>3</strong>
+                    <small>défis</small>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <nav class="navigation">
+        <button class="active">🏠<span>Accueil</span></button>
+        <button>🗺️<span>Carte</span></button>
+        <button>🎯<span>Défis</span></button>
+        <button>🏆<span>Classement</span></button>
+        <button>👤<span>Profil</span></button>
+    </nav>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="app.js"></script>
+
+</body>
+</html>
