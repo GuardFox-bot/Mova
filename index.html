@@ -3,81 +3,516 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#08090d">
+
     <title>MOVA</title>
 
-    <link rel="stylesheet"
-          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
 
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+<div class="app">
+
+    <!-- HEADER -->
     <header class="topbar">
+
         <div>
             <div class="logo">MOVA</div>
-            <div class="subtitle">Explore. Collect. Move.</div>
+            <div class="online">
+                <span></span>
+                EN LIGNE
+            </div>
         </div>
 
-        <div class="stats">
-            <div>⭐ <span id="points">0</span></div>
-            <div>🪙 <span id="coins">0</span></div>
+        <div class="top-stats">
+            <div class="mini-stat">
+                ⭐ <b id="points">0</b>
+            </div>
+
+            <div class="mini-stat">
+                🪙 <b id="coins">0</b>
+            </div>
         </div>
+
     </header>
 
-    <main>
-        <section class="welcome">
-            <h1>Prêt à explorer ?</h1>
-            <p>Déplace-toi dans le monde réel et découvre ce qui t'attend.</p>
-        </section>
 
-        <section class="map-container">
+    <!-- ================= HOME ================= -->
+
+    <section id="home" class="page active-page">
+
+        <div class="hero">
+
+            <p class="eyebrow">TON EXPLORATION</p>
+
+            <h1>
+                Continue de<br>
+                <span>bouger.</span>
+            </h1>
+
+            <p class="hero-text">
+                Chaque pas te rapproche du prochain palier.
+            </p>
+
+        </div>
+
+
+        <!-- PEDOMETRE -->
+
+        <div class="step-card">
+
+            <div class="step-ring" id="stepRing">
+
+                <div class="ring-content">
+
+                    <div class="shoe">👟</div>
+
+                    <strong id="steps">0</strong>
+
+                    <span>PAS</span>
+
+                </div>
+
+            </div>
+
+
+            <div class="step-info">
+
+                <div class="goal-label">
+                    OBJECTIF DU JOUR
+                </div>
+
+                <div class="goal-number">
+                    <b id="goalCurrent">0</b>
+                    <span>/ 5 000</span>
+                </div>
+
+                <div class="progress-bar">
+                    <div
+                        class="progress-fill"
+                        id="progressFill"
+                    ></div>
+                </div>
+
+                <button
+                    class="primary-button"
+                    id="validateSteps"
+                >
+                    VALIDER MES PAS
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- PALIER -->
+
+        <div class="section-title">
+            <div>
+                <span>PROGRESSION</span>
+                <h2>Les paliers</h2>
+            </div>
+
+            <span class="small-label">
+                AUJOURD'HUI
+            </span>
+        </div>
+
+
+        <div class="levels">
+
+            <div class="level completed" data-level="1000">
+                <span>1K</span>
+                <small>+50 ⭐</small>
+            </div>
+
+            <div class="level" data-level="2500">
+                <span>2.5K</span>
+                <small>+100 ⭐</small>
+            </div>
+
+            <div class="level" data-level="5000">
+                <span>5K</span>
+                <small>+250 ⭐</small>
+            </div>
+
+            <div class="level" data-level="7500">
+                <span>7.5K</span>
+                <small>+400 ⭐</small>
+            </div>
+
+            <div class="level" data-level="10000">
+                <span>10K</span>
+                <small>+750 ⭐</small>
+            </div>
+
+        </div>
+
+
+        <!-- QUICK STATS -->
+
+        <div class="quick-stats">
+
+            <div>
+                <span>🔥</span>
+                <b>3</b>
+                <small>jours actifs</small>
+            </div>
+
+            <div>
+                <span>🗺️</span>
+                <b id="distance">0.0</b>
+                <small>km parcourus</small>
+            </div>
+
+            <div>
+                <span>🎯</span>
+                <b>3</b>
+                <small>défis</small>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= MAP ================= -->
+
+    <section id="mapPage" class="page">
+
+        <div class="page-heading">
+
+            <div>
+                <p class="eyebrow">EXPLORATION</p>
+                <h1>La carte</h1>
+            </div>
+
+            <div class="location-pill" id="locationMessage">
+                📍 Recherche...
+            </div>
+
+        </div>
+
+
+        <div class="map-wrapper">
+
             <div id="map"></div>
 
-            <div class="location-message" id="locationMessage">
-                📍 Recherche de ta position...
-            </div>
-        </section>
+            <div class="map-legend">
 
-        <section class="bottom-panel">
-
-            <div class="card">
-                <span class="card-icon">👟</span>
                 <div>
-                    <strong id="steps">0</strong>
-                    <small>pas</small>
+                    <span class="legend-dot coin"></span>
+                    Pièce
                 </div>
-            </div>
 
-            <div class="card">
-                <span class="card-icon">🗺️</span>
                 <div>
-                    <strong id="distance">0.0</strong>
-                    <small>km</small>
+                    <span class="legend-dot rare"></span>
+                    Rare
                 </div>
-            </div>
 
-            <div class="card">
-                <span class="card-icon">🎯</span>
                 <div>
-                    <strong>3</strong>
-                    <small>défis</small>
+                    <span class="legend-dot range"></span>
+                    Zone
                 </div>
+
             </div>
 
-        </section>
-    </main>
+        </div>
+
+        <div class="map-tip">
+            <span>💡</span>
+
+            <div>
+                <b>Explore autour de toi</b>
+                <p>
+                    Approche-toi d'une pièce pour pouvoir la récupérer.
+                </p>
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- ================= CHALLENGES ================= -->
+
+    <section id="challenges" class="page">
+
+        <div class="page-heading">
+
+            <div>
+                <p class="eyebrow">OBJECTIFS</p>
+                <h1>Défis</h1>
+            </div>
+
+        </div>
+
+
+        <div class="challenge-card featured">
+
+            <div class="challenge-icon">🚶</div>
+
+            <div class="challenge-content">
+
+                <span>AUJOURD'HUI</span>
+
+                <h2>Petit voyage</h2>
+
+                <p>
+                    Parcours 3 km aujourd'hui.
+                </p>
+
+                <div class="challenge-progress">
+                    <div style="width: 0%"></div>
+                </div>
+
+                <small>0 / 3 km</small>
+
+            </div>
+
+            <strong>+300 ⭐</strong>
+
+        </div>
+
+
+        <div class="challenge-card">
+
+            <div class="challenge-icon">🪙</div>
+
+            <div class="challenge-content">
+
+                <span>COLLECTE</span>
+
+                <h2>Chasseur de pièces</h2>
+
+                <p>
+                    Récupère 5 pièces.
+                </p>
+
+                <small>0 / 5</small>
+
+            </div>
+
+            <strong>+150 🪙</strong>
+
+        </div>
+
+
+        <div class="challenge-card">
+
+            <div class="challenge-icon">🌍</div>
+
+            <div class="challenge-content">
+
+                <span>EXPLORATION</span>
+
+                <h2>Première découverte</h2>
+
+                <p>
+                    Trouve ton premier objet rare.
+                </p>
+
+            </div>
+
+            <strong>+500 ⭐</strong>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= RANKING ================= -->
+
+    <section id="ranking" class="page">
+
+        <div class="page-heading">
+
+            <div>
+                <p class="eyebrow">COMPÉTITION</p>
+                <h1>Classement</h1>
+            </div>
+
+        </div>
+
+
+        <div class="ranking-tabs">
+            <button class="selected">Amis</button>
+            <button>Local</button>
+            <button>Mondial</button>
+        </div>
+
+
+        <div class="ranking-list">
+
+            <div class="rank-item">
+                <span class="rank">🥇</span>
+                <div class="avatar">L</div>
+                <div class="rank-name">
+                    <b>Lucas</b>
+                    <small>Niveau 8</small>
+                </div>
+                <strong>8 420 ⭐</strong>
+            </div>
+
+            <div class="rank-item">
+                <span class="rank">🥈</span>
+                <div class="avatar">E</div>
+                <div class="rank-name">
+                    <b>Emma</b>
+                    <small>Niveau 7</small>
+                </div>
+                <strong>7 920 ⭐</strong>
+            </div>
+
+            <div class="rank-item you">
+                <span class="rank">3</span>
+                <div class="avatar">H</div>
+                <div class="rank-name">
+                    <b>Toi</b>
+                    <small>Niveau 4</small>
+                </div>
+                <strong id="rankingPoints">0 ⭐</strong>
+            </div>
+
+            <div class="rank-item">
+                <span class="rank">4</span>
+                <div class="avatar">N</div>
+                <div class="rank-name">
+                    <b>Nathan</b>
+                    <small>Niveau 3</small>
+                </div>
+                <strong>2 140 ⭐</strong>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= PROFILE ================= -->
+
+    <section id="profile" class="page">
+
+        <div class="profile-header">
+
+            <div class="profile-avatar">
+                H
+            </div>
+
+            <div>
+                <p class="eyebrow">TON PROFIL</p>
+                <h1>Hugo</h1>
+                <span>Niveau 4 • Explorateur</span>
+            </div>
+
+        </div>
+
+
+        <div class="profile-grid">
+
+            <div>
+                <b id="profilePoints">0</b>
+                <span>Points</span>
+            </div>
+
+            <div>
+                <b id="profileCoins">0</b>
+                <span>Pièces</span>
+            </div>
+
+            <div>
+                <b id="profileSteps">0</b>
+                <span>Pas</span>
+            </div>
+
+            <div>
+                <b id="profileDistance">0.0</b>
+                <span>Km</span>
+            </div>
+
+        </div>
+
+
+        <div class="profile-card">
+
+            <span>🏅</span>
+
+            <div>
+                <b>Explorateur débutant</b>
+                <p>Continue comme ça.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- NAVIGATION -->
 
     <nav class="navigation">
-        <button class="active">🏠<span>Accueil</span></button>
-        <button>🗺️<span>Carte</span></button>
-        <button>🎯<span>Défis</span></button>
-        <button>🏆<span>Classement</span></button>
-        <button>👤<span>Profil</span></button>
+
+        <button class="nav-button active" data-page="home">
+            <span>⌂</span>
+            Accueil
+        </button>
+
+        <button class="nav-button" data-page="mapPage">
+            <span>◉</span>
+            Carte
+        </button>
+
+        <button class="nav-button" data-page="challenges">
+            <span>◇</span>
+            Défis
+        </button>
+
+        <button class="nav-button" data-page="ranking">
+            <span>♛</span>
+            Classement
+        </button>
+
+        <button class="nav-button" data-page="profile">
+            <span>○</span>
+            Profil
+        </button>
+
     </nav>
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="app.js"></script>
+</div>
+
+
+<!-- ANIMATION DE RÉCOMPENSE -->
+
+<div id="rewardOverlay" class="reward-overlay">
+
+    <div class="reward-box">
+
+        <div class="reward-burst">✨</div>
+
+        <span>PALIER ATTEINT</span>
+
+        <h2 id="rewardTitle">1 000 PAS</h2>
+
+        <strong id="rewardAmount">+50 ⭐</strong>
+
+        <button id="closeReward">
+            CONTINUER
+        </button>
+
+    </div>
+
+</div>
+
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="app.js"></script>
 
 </body>
 </html>
